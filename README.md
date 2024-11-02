@@ -20,7 +20,8 @@
 
 ## Dataset Used  :-
 ### Merchant Dataset link -
-
+1 :-https://github.com/aadarsh786/Walmart-Data-Ingestion-In-BigQuery-Project/blob/main/merchants_1.json
+2 :-
 ### Sales Dataset link -
 
 
