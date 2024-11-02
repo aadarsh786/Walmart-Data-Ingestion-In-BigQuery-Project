@@ -29,7 +29,7 @@ create_dataset = BigQueryCreateEmptyDatasetOperator(
     task_id="create_dataset",
     dataset_id="aadarsh_walmart",
     location='US',
-    dag=dag  # Add DAG assignment
+    dag=dag  
 )
 
 # TASK 2: CREATING MERCHANT, STAGE, AND TARGET TABLES
@@ -44,7 +44,7 @@ create_merchant_table = BigQueryCreateEmptyTableOperator(
         {"name": "merchant_country", "type": "STRING", "mode": "NULLABLE"},
         {"name": "last_update", "type": "TIMESTAMP", "mode": "NULLABLE"},
     ],
-    dag=dag  # Add DAG assignment
+    dag=dag  
 )
 
 create_sales_stage_table = BigQueryCreateEmptyTableOperator(
@@ -60,7 +60,7 @@ create_sales_stage_table = BigQueryCreateEmptyTableOperator(
         {"name": "merchant_id", "type": "STRING", "mode": "NULLABLE"},
         {"name": "last_update", "type": "TIMESTAMP", "mode": "NULLABLE"},
     ],
-    dag=dag  # Add DAG assignment
+    dag=dag  
 )
 
 create_target_table = BigQueryCreateEmptyTableOperator(
@@ -80,7 +80,7 @@ create_target_table = BigQueryCreateEmptyTableOperator(
         {"name": "merchant_country", "type": "STRING", "mode": "NULLABLE"},
         {"name": "last_update", "type": "TIMESTAMP", "mode": "NULLABLE"},
     ],
-    dag=dag  # Add DAG assignment
+    dag=dag  
 )
 
 # TASK 3: DATA LOAD ON CREATED TABLE from GCS TO BIGQUERY
@@ -91,7 +91,7 @@ gcs_to_bigquery_merchant = GCSToBigQueryOperator(
     destination_project_dataset_table="inlaid-marker-430214-u1.aadarsh_walmart.merchants_tb",
     source_format='NEWLINE_DELIMITED_JSON',
     write_disposition='WRITE_TRUNCATE',
-    dag=dag  # Add DAG assignment
+    dag=dag  
 )
 
 gcs_to_bigquery_sales_stage = GCSToBigQueryOperator(
@@ -101,7 +101,7 @@ gcs_to_bigquery_sales_stage = GCSToBigQueryOperator(
     destination_project_dataset_table="inlaid-marker-430214-u1.aadarsh_walmart.Sales_stage_tb",
     source_format='NEWLINE_DELIMITED_JSON',
     write_disposition='WRITE_TRUNCATE',
-    dag=dag  # Add DAG assignment
+    dag=dag  
 )
 
 # TASK 4: PERFORMING JOIN OPERATION ON MERCHANT AND STAGE TABLE
@@ -125,7 +125,7 @@ LEFT JOIN `inlaid-marker-430214-u1.aadarsh_walmart.merchants_tb` M
 ON  S.merchant_id = M.merchant_id
 """,
     use_legacy_sql=False,
-    dag=dag  # Add DAG assignment
+    dag=dag  
 )
 
 # TASK 5: PERFORMING UPDATE AND INSERT FROM FINAL SALES STAGING TABLE
@@ -157,7 +157,7 @@ WHEN NOT MATCHED THEN
     );
 """,
     use_legacy_sql=False,
-    dag=dag  # Add DAG assignment
+    dag=dag  
 )
 
 # DEFINING TASK DEPENDENCIES
