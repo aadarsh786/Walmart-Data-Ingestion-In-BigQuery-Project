@@ -43,3 +43,9 @@
 - https://github.com/aadarsh786/Walmart-Data-Ingestion-In-BigQuery-Project/blob/main/walmart_sales_1.json
 - https://github.com/aadarsh786/Walmart-Data-Ingestion-In-BigQuery-Project/blob/main/walmart_sales_2.json
 
+
+
+## Python Script File  :-
+[AirFlow-BigQuery-Dag-File](practicepu.py)
+
+
