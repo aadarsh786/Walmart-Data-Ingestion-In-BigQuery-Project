@@ -1,9 +1,9 @@
 # Walmart-Data-Ingestion-In-BigQuery-Project 
 
   <br>
-   <br>
-   <br>
-   <br>
+  <br>
+  <br>
+   
 
 
 
@@ -21,8 +21,23 @@
          basically the data we have received in recent times it contains the previous data and recent data ie:-merchants_1.
        <br>
    -  <h3>Sales</h3> :  This data we are getting on daily basis that is walmart_sales_1.
+   
+       <br>
 
+       ### PROCESS:
 
+      *  It will read data from gcs bucket.
+      *  Everytime we are going to get a files for merchant that contain full latest data .
+      *  We will overwrite the merchants data which already exists by new one so we are performing full truncate and then load operation.
+      *  Sales data we are getting on daily basis  this data will store in stage table in BigQuery.
+      *  same overwrite operation will perform on stage table.
+      *  Performing join operation between merchant and sales_stage table will get finalsales table.
+      *  Performing update and insert ooperation on final_sales table and load it into the target table as final output.
+         
+      
+     
+
+  
 
 
 
@@ -50,6 +65,7 @@
 <br>
 <br>
 <br>
+
 ## ARCHITECTURE DIAGRAM :-
 
 ![Project Architecture](Walmart_p1.drawio.png)  
