@@ -2,38 +2,47 @@
 
   <br>
   <br>
-  <br>
    
 
+## PROJECT OVERVIEW
+
+This project is designed to automate the ingestion of Walmart's sales and merchant data into Google BigQuery using Google Cloud Storage (GCS) and Airflow. The data arrives in JSON format, and the goal is to update BigQuery tables to maintain the latest data for analytics and reporting.
+
+ <br>
 
 
 
 
+### PROJECT EXPLANATION :-  
 
+  #### Datasets
 
-## EXPLANATION OF PROJECT :-  
-
-+  Lets assume we are getting the data in json form now imagine we have two datasets.
+   ###### We assume two datasets:
   
-   - <h3>Merchant</h3> : This data that we are getting every day or every week basically it contains latest data everytime.
-     - Eg:-Lets say that first merchant file we got in january it was only having the data of 50-60 merchant.
-      -  after one or two months we got this same file again with data of lets say 100 merchant which is fresh data
-         basically the data we have received in recent times it contains the previous data and recent data ie:-merchants_1.
+   <h3>Merchant</h3> : 
+   This dataset is updated periodically (daily or weekly) with a full snapshot of the latest merchant data. For instance, if the first merchant file received in January contained 50–60 merchants, a subsequent file might contain updated data for those merchants, along with new records. This latest file always replaces any previous merchant data.
        <br>
-   -  <h3>Sales</h3> :  This data we are getting on daily basis that is walmart_sales_1.
+   -  <h3>Sales</h3> :  Sales data arrives daily, recording Walmart’s sales transactions..
    
-       <br>
+      
 
-       ### PROCESS:
+   ## Data Processing Steps:
 
-      *  It will read data from gcs bucket.
-      *  Everytime we are going to get a files for merchant that contain full latest data .
-      *  We will overwrite the merchants data which already exists by new one so we are performing full truncate and then load operation.
-      *  Sales data we are getting on daily basis  this data will store in stage table in BigQuery.
-      *  same overwrite operation will perform on stage table.
-      *  Performing join operation between merchant and sales_stage table will get finalsales table.
-      *  Performing update and insert ooperation on final_sales table and load it into the target table as final output.
-         
+  <h3>1. Read Data from GCS:</h3>
+  Both merchant and sales data are stored as JSON files in a GCS bucket.
+
+<h3>  2.  Merchant Data Loading:</h3>
+
+ Since the merchant data file contains a complete snapshot, we perform a truncate-and-load operation, where the existing data is overwritten by the new data.
+<h3>3. Sales Data Staging:</h3>
+
+ Sales data is ingested daily and loaded into a staging table in BigQuery. The staging table is overwritten each time to maintain only the latest data.
+<h3>4. Data Joining and Transformation:</h3>
+
+ A join operation is performed between the merchant table and the sales_stage table to create a final_sales table, providing enriched sales information with merchant details.
+<h3>5. Update Target Table:</h3>
+
+ An upsert (update and insert) operation is performed on the final_sales table, ensuring it holds both the latest and historical sales records.
       
      
 
@@ -88,13 +97,13 @@
   
 *  Scripting Language  :- SQL
   
-*  Google Cloud Platform
+* ### Google Cloud Platform
  
-    - BigQuery
+    - #### BigQuery
       
-    - Cloud Storage
+    -  #### Cloud Storage(GCS)
       
-    - AirFlow
+    - #### AirFlow for orchestration
 
 
 
